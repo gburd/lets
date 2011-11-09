@@ -54,8 +54,9 @@ case "$1" in
                 }
             }
 
-            (cd ../../snappy && git archive --format=tar --prefix=snappy-$SNAPPY_VSN/ $SNAPPY_VSN) \
-                | tar xf -
+#            (cd ../../snappy && git archive --format=tar --prefix=snappy-$SNAPPY_VSN/ $SNAPPY_VSN) \
+#                | tar xf -
+            tar -xzf snappy-$SNAPPY_VSN.tgz
             (cd snappy-$SNAPPY_VSN && \
                 sed -ibak '/^AC_ARG_WITH.*$/, /^fi$/d' configure.ac
             )
@@ -76,8 +77,9 @@ case "$1" in
         fi
         # leveldb
         if [ ! -f $BASEDIR/leveldb/lib/libleveldb.a  ]; then
-            (cd ../../leveldb && git archive --format=tar --prefix=leveldb-$LEVELDB_VSN/ $LEVELDB_VSN) \
-                | tar xf -
+#            (cd ../../leveldb && git archive --format=tar --prefix=leveldb-$LEVELDB_VSN/ $LEVELDB_VSN) \
+#                | tar xf -
+            tar -xf leveldb-$LEVELDB_VSN.tgz
             (cd leveldb-$LEVELDB_VSN && \
                 echo "echo \"PLATFORM_CFLAGS+=-fPIC -I$BASEDIR/snappy/include\" >> build_config.mk" >> build_detect_platform &&
                 echo "echo \"PLATFORM_LDFLAGS+=-L $BASEDIR/snappy/lib -lsnappy\" >> build_config.mk" >> build_detect_platform &&
